@@ -56,3 +56,25 @@
 |                  | `back()`         | Last element                                  | `v.back();`                                |
 |                  | `data()`         | Pointer to internal array                     | `int* p = v.data();`                       |
 
+
+# 📚 C++ 2D Vector Functions — With Examples
+
+| Function             | Description                                                   | Example Code Snippet                               |
+|:----------------------|:-------------------------------------------------------------|:----------------------------------------------------|
+| `push_back()`          | Adds a new 1D vector (row) at the end of the 2D vector        | `v.push_back({1, 2, 3});`                           |
+| `pop_back()`           | Removes the last row                                         | `v.pop_back();`                                      |
+| `clear()`              | Removes all rows                                             | `v.clear();`                                         |
+| `insert()`             | Inserts a row at specified position                          | `v.insert(v.begin()+1, {4, 5, 6});`                  |
+| `erase()`              | Removes a row at given position                              | `v.erase(v.begin()+2);`                              |
+| `size()`               | Number of rows (1D vectors)                                  | `v.size();`                                          |
+| `at()`                 | Access a specific row                                        | `v.at(1)`                                            |
+| `front()`              | Access first row                                             | `v.front();`                                         |
+| `back()`               | Access last row                                              | `v.back();`                                          |
+| `resize()`             | Change number of rows                                        | `v.resize(5);`                                       |
+| `swap()`               | Swap contents of two 2D vectors                              | `v1.swap(v2);`                                       |
+| `empty()`              | Check if 2D vector is empty                                  | `v.empty();`                                         |
+| `shrink_to_fit()`      | Reduce capacity to fit size                                  | `v.shrink_to_fit();`                                 |
+| Access Element         | Access element at [i][j] position                            | `v[i][j]`                                            |
+| Nested `push_back()`   | Add element in a specific row                                | `v[0].push_back(10);`                                |
+| Nested `size()`        | Get number of elements in a specific row                     | `v[1].size();`                                       |
+
