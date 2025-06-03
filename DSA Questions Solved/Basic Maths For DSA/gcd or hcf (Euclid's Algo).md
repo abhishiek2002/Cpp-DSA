@@ -34,6 +34,20 @@ int gcd(int a, int b) {
     }
     return a;
 }
+
+// or
+// int gcd(int a, int b){
+//   while(b!=0 || a!=0){
+//     if(b==0) return a;
+//     if(a==0) return b;
+    
+//     if(a>b){
+//       a = a-b;
+//     } else {
+//       b = b-a;
+//     }
+//   }
+// }
 ```
 ## 🧮 Or Recursive Style:
 ```cpp
