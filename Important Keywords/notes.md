@@ -37,7 +37,7 @@ Global variables are variables declared **outside all functions**, available **t
 
 ### 🔹 Example:
 ```cpp
-int count = 0;  // global variable
+int count = 0;  // global variable  , not recommended to use because anyone can changed it use instead reference variable to share variable between functions
 
 void increment() {
     count++;
@@ -61,6 +61,7 @@ Use `static` for **file-level scope** or **namespace** to limit accessibility.
 ## ⚡ 3. Inline Functions
 
 Inline functions are functions where the **function call is replaced** by the **function code** itself at compile time.
+These are used to reduce the function calls overhead.
 
 ### 🔹 Syntax:
 ```cpp
@@ -68,6 +69,38 @@ inline int square(int x) {
     return x * x;
 }
 ```
+
+### Example:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+inline int getMax(int a, int b){
+    return (a>b) ? a : b;
+}
+
+int main() {
+	int a=1, b=2;
+	
+	int ans = 0;
+	
+	ans = getMax(a,b);
+	
+	a += 3;
+	b += 1;
+    
+    ans = getMax(a,b);
+    cout<<ans<<endl;
+    return 0;
+}
+```
+
+### Note:
+
+- 1 line -> compiler maan jaayega.
+- 2-3 line -> Compiler bolega aapki marzi hai.
+- (>3) line -> Compiler bolega me nhi bnaunga ye inline function.
 
 ### 📌 Use Case:
 - Very short functions (like one-liners).
@@ -93,6 +126,33 @@ void greet(string name = "User") {
 int main() {
     greet();        // Hello, User
     greet("John");  // Hello, John
+}
+```
+
+### Example:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+void print(int arr[], int n, int start = 0){  // value of start by default is 0
+    
+    // it is rightmost means you must have to declare default argument first at rightmost
+    // like this print(int arr[], int start = 0, int n) not allowed
+    for(int i=start; i<n; i++){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+}
+
+int main() {
+	int arr[5] = {1,2,3,4,5};
+	
+	print(arr, 5);  // be default start with 0
+	
+	print(arr, 5, 2);
+	
+	return 0;
 }
 ```
 
