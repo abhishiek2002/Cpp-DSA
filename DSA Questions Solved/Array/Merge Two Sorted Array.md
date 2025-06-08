@@ -1,4 +1,4 @@
-# Merge Sorted Array
+# Merge Two Sorted Array
 
 👉 <a href="https://leetcode.com/problems/merge-sorted-array">Leetcode Problem Statement</a>
 
