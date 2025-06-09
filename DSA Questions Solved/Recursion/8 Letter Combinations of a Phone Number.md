@@ -3,6 +3,12 @@
 👉 <a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number">Leetcode Problem Statement</a>
 
 ---
+
+### Solution Graph:
+
+<img src="/DSA Questions Solved/Recursion/Letter Combination Of A Phone Number Solution Graph.png" />
+
+---
 ## Code:
 ```cpp
 #include <bits/stdc++.h> 
