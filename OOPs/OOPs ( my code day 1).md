@@ -100,6 +100,7 @@ int main(){
     return 0;
 }
 ```
+---
 
 ## Accessing Data Members/Properties
 
@@ -375,6 +376,7 @@ Hi
 Constructor Called
 Constructor Called
 ```
+---
 
 ## Parameterised Constructor:
 
@@ -436,6 +438,7 @@ Hi
 89
 70
 ```
+---
 
 ## **this* keyword:
 
@@ -500,7 +503,7 @@ this -> 0x7ffd0f60ac68
 Address of ramesh 0x7ffd0f60ac68
 89
 ```
-
+---
 
 ## Copy Constructor:
 
@@ -584,3 +587,527 @@ int main() {
 }
 ```
 
+### Generate Own Copy Constructor
+#### 🔁 What Happens Internally?
+A copy constructor is used to copy one object into another. Its signature is typically:
+
+```cpp
+ClassName(const ClassName &obj);  // Correct way: pass by reference
+```
+Now, if you mistakenly do:
+
+```cpp
+ClassName(ClassName obj);  // ❌ Wrong: pass by value
+```
+Then when this constructor is called, it tries to copy the object obj into the function parameter (because it's pass-by-value), which again calls the copy constructor to copy it… and so on infinitely.
+
+#### **Example:**
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    char level;
+    
+    // create our own default constructor
+    
+    Hero() {
+        cout<< "Constructor called" <<endl;
+    }
+    
+    // parameterised constructor
+    
+    Hero( int health) {
+        this->health = health;
+    }
+    
+    Hero( int health, char level) {
+        this->health = health;
+        this->level = level;
+    }
+    
+    // copy constructor
+    
+    // must be pass by reference
+    Hero(Hero& temp){
+	cout<<" Copy Constructor Called " << endl;
+        this->health = temp.health;
+        this->level = temp.level;
+    }
+    
+    int getHealth(){
+        return this->health;
+    }
+    
+    int getLevel(){
+        return this->health;
+    }
+    
+    void setHealth(int health){
+        this->health = health;
+    }
+    
+    void setLevel(char level){
+        this->level = level;
+    }
+    
+    void print(){
+        cout<<"health "<< this->health <<endl;
+        cout<<"level "<< this->level <<endl;
+    }
+    
+};
+
+
+int main() {
+    
+    Hero suresh(70, 'C');
+    suresh.print();
+    
+    // Hero R;
+    // R.setHealth(suresh.getHealth());
+    // R.setLevel(suresh.getLevel());
+    
+    // copy constructor
+    Hero R(suresh);  // same as above
+    R.print();
+    
+    
+	
+    return 0;
+}
+```
+
+**Output**
+```txt
+Copy Constructor Called
+health 70
+level C
+health 70
+level C
+```
+---
+
+## Shallow & Deep Copy:
+
+- 👉 **Default copy constructor** generate **shallow copy**
+- **Shallow Copy**: Copies object’s pointer values (both point to same memory). Remember only pointer values.
+- **Deep Copy**: Allocates separate memory and copies actual data.
+
+### Shallow Copy
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    // char name[100]; // not good practice
+    char *name;
+    char level;
+    
+    
+    // create our own default constructor
+    
+    Hero() {
+        cout<< "Simple Constructor called" <<endl;
+        name = new char[100];
+    }
+    
+    // parameterised constructor
+    
+    Hero( int health) {
+        this->health = health;
+    }
+    
+    Hero( int health, char level) {
+        this->health = health;
+        this->level = level;
+    }
+    
+    int getHealth(){
+        return this->health;
+    }
+    
+    int getLevel(){
+        return this->health;
+    }
+    
+    void setHealth(int health){
+        this->health = health;
+    }
+    
+    void setLevel(char level){
+        this->level = level;
+    }
+    
+    void setName(char name[]){
+        strcpy(this->name, name);
+    }
+    
+    void print(){
+        cout<<endl;
+        cout<<"[ Name: "<< this->name <<" ,";
+        cout<<"health: "<< this->health <<", ";
+        cout<<"level: "<< this->level <<" ]";
+        cout<<endl<<endl;
+    }
+    
+};
+
+
+int main() {
+    
+    Hero hero1;
+    
+    hero1.setHealth(92);
+    hero1.setLevel('S');
+    
+    char name[] = "Abhishek";
+    
+    hero1.setName(name);
+    
+    hero1.print();
+    
+    // use default copy constructor 
+    
+    Hero hero2(hero1);
+    // Hero hero2 = hero1;
+    hero2.print();
+    
+    hero1.name[0] = '!';
+    hero1.setHealth(90);
+    hero1.print();
+    
+    hero2.print();
+	
+    return 0;
+}
+```
+
+**Output**
+```txt
+Simple Constructor called
+
+[ Name: Abhishek ,health: 92, level: S ]
+
+Copy constructor called
+
+[ Name: Abhishek ,health: 92, level: S ]
+
+
+[ Name: !bhishek ,health: 90, level: S ]
+
+
+[ Name: !bhishek ,health: 92, level: S ]
+```
+
+### Deep Copy
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    // char name[100]; // not good practice
+    char *name;
+    char level;
+    
+    
+    // create our own default constructor
+    
+    Hero() {
+        cout<< "Simple Constructor called" <<endl;
+        name = new char[100];
+    }
+    
+    // parameterised constructor
+    
+    Hero( int health) {
+        this->health = health;
+    }
+    
+    Hero( int health, char level) {
+        this->health = health;
+        this->level = level;
+    }
+    
+    // copy constructor
+    
+    Hero(Hero& temp){
+        char *ch = new char[strlen(temp.name) + 1];  // deep copy
+        strcpy(ch, temp.name);
+        this->name = ch;
+        
+        cout<< "Copy constructor called" << endl;
+        this->health = temp.health;
+        this->level = temp.level;
+    }
+    
+    int getHealth(){
+        return this->health;
+    }
+    
+    int getLevel(){
+        return this->health;
+    }
+    
+    void setHealth(int health){
+        this->health = health;
+    }
+    
+    void setLevel(char level){
+        this->level = level;
+    }
+    
+    void setName(char name[]){
+        strcpy(this->name, name);
+    }
+    
+    void print(){
+        cout<<endl;
+        cout<<"[ Name: "<< this->name <<" ,";
+        cout<<"health: "<< this->health <<", ";
+        cout<<"level: "<< this->level <<" ]";
+        cout<<endl<<endl;
+    }
+    
+};
+
+
+int main() {
+    
+    Hero hero1;
+    
+    hero1.setHealth(92);
+    hero1.setLevel('S');
+    
+    char name[] = "Abhishek";
+    
+    hero1.setName(name);
+    
+    hero1.print();
+    
+    // use own copy constructor 
+    
+    Hero hero2(hero1);
+    // Hero hero2 = hero1;
+    hero2.print();
+    
+    hero1.name[0] = '!';
+    hero1.setHealth(90);
+    hero1.print();
+    
+    hero2.print();
+	
+    return 0;
+}
+```
+
+**Output**
+```txt
+Simple Constructor called
+
+[ Name: Abhishek ,health: 92, level: S ]
+
+Copy constructor called
+
+[ Name: Abhishek ,health: 92, level: S ]
+
+
+[ Name: !bhishek ,health: 90, level: S ]
+
+
+[ Name: Abhishek ,health: 92, level: S ]
+```
+---
+
+## Copy Assignment Operator
+
+- Let's suppose two objects are already created.
+- If we want to copy an object to another then we will use copy assignment operator.
+- It work same as **default copy constructor** means create **shallow copy**
+
+```cpp
+int main() {
+    
+    Hero hero1;
+    
+    hero1.setHealth(92);
+    hero1.setLevel('S');
+    
+    char name[] = "Abhishek";
+    
+    hero1.setName(name);
+
+    
+    Hero hero2;
+    
+    // copy using assignment operator
+    hero2 = hero1;
+    
+    hero1.print();
+    
+    hero2.print();
+    
+	
+    return 0;
+}
+```
+---
+
+## Destructor
+
+Called when an object goes out of scope or is explicitly deleted. Used for cleanup.
+If object is created using static allocation then **destructor** will called automatically after object goes out of scope.
+If object is created using dynamic allocation then **destructor** will not called automatically after object goes out of scope , we need to delete object explicitly.
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    // char name[100]; // not good practice
+    char *name;
+    char level;
+    
+    
+    // create our own default constructor
+    
+    Hero() {
+        cout<< "Simple Constructor called" <<endl;
+        name = new char[100];
+    }
+    
+    
+    // our own destructor
+    ~Hero(){
+        cout<< "Destructor called" << endl;
+    }
+    
+};
+
+
+int main() {
+    
+    // static
+    Hero a;
+    
+    // dynamic
+    Hero *b = new Hero;
+    
+    delete b; // need to delete explicitly
+    
+    return 0;
+}
+```
+
+**Output**
+```txt
+Simple Constructor called
+Simple Constructor called
+Destructor called
+Destructor called
+```
+---
+
+## 📌 Static Keyword
+- Used to create members shared by all objects.
+- Belongs to class
+- No need of object to access
+
+```cpp
+class Hero {
+public:
+    static int count;
+};
+
+// initialize static data member
+int Hero::count = 5;
+
+
+int main() {
+    
+    cout<< Hero::count << endl;
+
+    Hero a;
+    cout<< a.count << endl; // not recommended
+    
+    return 0;
+}
+```
+
+**Output**
+```txt
+5
+```
+
+---
+
+## 🔁 Static Functions
+- Can be called using class name. They can only access static members.
+- No need of object to call them.
+- Does not have **this** keyword because **this** is pointer to object but there is no need of object in static functions.
+
+```cpp
+class Hero {
+public:
+    static int count;
+    static int random() {
+        return count;
+    }
+};
+
+// initialize static data member
+int Hero::count = 5;
+
+
+int main() {
+    
+    cout<< Hero::random() << endl;
+    
+    Hero a;
+    
+    cout<< a.random() << endl; // not recommended
+    
+}
+```
+---
+
+# What have we study in this 
+
+- class
+- object
+- data member
+- behaviour / function
+- access modifiers
+- static allocation
+- dynamic allocation
+- simple constructor
+- default constructor
+- parameterised constructor
+- copy constructor
+- copt assignment operator
+- static destructor
+- dynamic case destructor
+- shallow copy
+- deep copy
+- static data members
+- static functions
+
+---
