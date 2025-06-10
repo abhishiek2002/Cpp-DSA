@@ -180,6 +180,8 @@ int main() {
 ```cpp
 ```
 
+---
+
 ## Set values of public data members
 
 ```cpp
@@ -214,7 +216,7 @@ int main() {
     return 0;
 }
 ```
-
+---
 ## Getter and Setter:
 
 Because we can not directly access the private data mambers. 
@@ -284,7 +286,7 @@ int main() {
     return 0;
 }
 ```
-
+---
 ## Static vs Dynamic Allocation
 
 ### Static Allocation
@@ -315,7 +317,270 @@ cout<< (*ramesh).level << endl;
 cout<< ramesh->level <<endl;
 ```
 
-
+---
 ## Constructor
 
 Whenever we create a object then a constructor is called or invoke automatically behind the scene.
+If constructor is not provided by the user then compiler automatically invoke default constructor.
+
+```
+Hero ramesh;  // behind the scene it will called ramesh.Hero() if no constructor is provided by default.
+```
+It has no return type and input parameter.
+
+---
+## Default Constructor (own default constructor)
+
+👉 If you create your own constructor then default constructor generate or called by compiler will became vanish.
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    char level;
+    
+    // create our own default constructor
+    
+    Hero() {
+        cout << "Constructor Called" << endl;
+    }
+    
+};
+
+
+int main() {
+    
+    cout<<"Hi"<<endl;
+    
+    // creation of object statically
+    Hero ramesh;
+    
+    // dynamically creation of object
+    Hero *h = new Hero;  // same constructor will called same as above
+    
+
+	
+    return 0;
+}
+```
+
+**Output:**
+```txt
+Hi
+Constructor Called
+Constructor Called
+```
+
+## Parameterised Constructor:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    char level;
+    
+    // create parameterized constructor
+    
+    Hero( int health) {
+        this->health = health;
+    }
+
+    Hero( int health, char level) {
+	this->health = health;
+	this->level = level;
+    }
+    
+    int getHealth(){
+        return this->health;
+    }
+
+    int getLevel(){
+        return this->level;
+    }
+    
+};
+
+
+int main() {
+    
+    cout<<"Hi"<<endl;
+    
+    // creation of object statically
+    Hero ramesh(89);
+    
+    cout<< ramesh.getHealth() <<endl; // 89
+    
+    // dynamically creation of object
+    Hero *h = new Hero(70, 'S');  // same constructor will called same as above
+    
+    cout<< h->getHealth() <<endl; // 70
+    cout<< h->getLevel() <<endl; // S
+	
+    return 0;
+}
+```
+
+**Output:**
+```txt
+Hi
+89
+70
+```
+
+## **this* keyword:
+
+
+**this** keyword is point toward the object itself.
+
+When **input parameter** and the **data member** have the same name then you will get confused.
+
+That means **this** is same as **&ramesh** because both are point toward same object
+
+So that means address of current object is stored in **this**
+
+```cpp
+Hero( int health) {
+	this->health = health;
+}
+```
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    char level;
+    
+    // create our own default constructor
+    
+    Hero( int health) {
+        cout<<"this -> "<< this <<endl;
+        this->health = health;
+    }
+    
+    int getHealth(){
+        return this->health;
+    }
+    
+};
+
+
+int main() {
+    
+    cout<<"Hi"<<endl;
+    
+    // creation of object statically
+    Hero ramesh(89);
+    
+    cout<<"Address of ramesh "<< &ramesh <<endl;
+    cout<< ramesh.getHealth() <<endl; // 89
+    
+	
+    return 0;
+}
+```
+
+**Output**
+```txt
+Hi
+this -> 0x7ffd0f60ac68
+Address of ramesh 0x7ffd0f60ac68
+89
+```
+
+
+## Copy Constructor:
+
+If you have not created any copy constructor then compiler will automatically generate it.
+
+Or you can also create your own constructor.
+
+```
+Constructor -> Object creation
+Copy -> Object Copy
+```
+
+### Default copy constructor
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Hero{
+    
+private:
+    int health;
+public:
+    char level;
+    
+    // create our own default constructor
+    
+    Hero() {
+        cout<< "Constructor called" <<endl;
+    }
+    
+    // parameterised constructor
+    
+    Hero( int health) {
+        this->health = health;
+    }
+    
+    Hero( int health, char level) {
+        this->health = health;
+        this->level = level;
+    }
+    
+    int getHealth(){
+        return this->health;
+    }
+    
+    int getLevel(){
+        return this->health;
+    }
+    
+    void setHealth(int health){
+        this->health = health;
+    }
+    
+    void setLevel(char level){
+        this->level = level;
+    }
+    
+    void print(){
+        cout<<"health "<< this->health <<endl;
+        cout<<"level "<< this->level <<endl;
+    }
+    
+};
+
+
+int main() {
+    
+    Hero suresh(70, 'C');
+    
+    // Hero R;
+    // R.setHealth(suresh.getHealth());
+    // R.setLevel(suresh.getLevel());
+    
+    Hero R(suresh);  // same as above
+    R.print();
+    
+    
+	
+    return 0;
+}
+```
+
