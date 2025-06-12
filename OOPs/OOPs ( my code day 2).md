@@ -684,6 +684,47 @@ int main() {
 }
 ```
 
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Vehicle{
+    public:
+    
+    virtual void rent() {
+        cout<<"Vehicle rent"<<endl;
+    }
+};
+
+class Bike: public Vehicle{
+    public:
+    
+    void rent() override {
+        cout<<"Bike rent"<<endl;
+    }
+};
+
+class Car: public Vehicle{
+    public:
+    
+    void rent() override {
+        cout<<"Car rent"<<endl;
+    }
+};
+
+
+
+int main() {
+	Vehicle *v1 = new Bike;
+	
+	v1->rent();  // Bike rent
+	
+	Vehicle *v2 = new Car;
+    
+    v2->rent();  // Car rent
+}
+```
+
 ### 🔸 Notes:
 - Virtual functions are resolved **at runtime** using **vtable** (virtual table).
 - If a base class has a virtual function and it's overridden in the derived class, the call to that function via a base class pointer will invoke the **derived class's version**.
