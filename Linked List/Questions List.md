@@ -1,4 +1,4 @@
-# QUestions That I Had Solved So Far Of Linked List
+# Questions That I Had Solved So Far Of Linked List
 
 1. Reverse Linked List 👉 <a href="https://leetcode.com/problems/reverse-linked-list">Link</a>
 2. Find Middle Of LL 👉 <a href="https://leetcode.com/problems/middle-of-the-linked-list">Link</a>
