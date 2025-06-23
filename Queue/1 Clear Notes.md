@@ -104,7 +104,52 @@ public:
 
 ---
 
-## 6. Circular Queue
+## 6. Implementing Queue Using Linked List
+```cpp
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+class QueueLL {
+    Node *front, *rear;
+
+public:
+    QueueLL() {
+        front = rear = nullptr;
+    }
+
+    void enqueue(int x) {
+        Node* newNode = new Node(x);
+        if (rear == nullptr) {
+            front = rear = newNode;
+            return;
+        }
+        rear->next = newNode;
+        rear = newNode;
+    }
+
+    void dequeue() {
+        if (front == nullptr) {
+            cout << "Queue is empty\n";
+            return;
+        }
+        Node* temp = front;
+        front = front->next;
+        if (front == nullptr) rear = nullptr;
+        delete temp;
+    }
+
+    int getFront() {
+        return (front != nullptr) ? front->data : -1;
+    }
+};
+```
+
+---
+
+## 7. Circular Queue
 Circular queue allows the rear to wrap around to the beginning.
 
 ```cpp
@@ -142,19 +187,19 @@ public:
 
 ---
 
-## 7. Input Restricted Queue
+## 8. Input Restricted Queue
 - Insert only at rear
 - Delete from both front or rear
 
 ---
 
-## 8. Output Restricted Queue
+## 9. Output Restricted Queue
 - Insert from front or rear
 - Delete only from front
 
 ---
 
-## 9. Doubly Ended Queue (Deque)
+## 10. Doubly Ended Queue (Deque)
 Deque allows insertion and deletion from both ends.
 
 **STL:**
@@ -189,7 +234,7 @@ int main() {
 
 ---
 
-## 10. Implementing Deque (Using Array)
+## 11. Implementing Deque (Using Array)
 ```cpp
 class Deque {
     int *arr, size, front, rear, cap;
