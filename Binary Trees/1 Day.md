@@ -154,3 +154,47 @@ levelOrderTraversal :
 2 3 
 4 5 6
 ```
+
+## inOrderTraversal
+
+```cpp
+void inOrderTraversal(Node* root){
+    Node* temp = root;
+    
+    // base case
+    if(temp == NULL) return;
+    
+    // recursion call
+    
+    // left
+    inOrderTraversal(temp->left);
+    
+    // node print
+    cout<<temp->data<<" ";
+    
+    // right
+    inOrderTraversal(temp->right);
+}
+```
+
+## postOrderTraversal
+
+```cpp
+void postOrderTraversal(Node* root){
+    Node* temp = root;
+    
+    // base case
+    if(temp == NULL) return;
+    
+    // recursion call
+    
+    // left
+    postOrderTraversal(temp->left);
+    
+    // right
+    postOrderTraversal(temp->right);
+    
+    // node print
+    cout<<temp->data<<" ";
+}
+```
